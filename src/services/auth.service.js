@@ -1,0 +1,31 @@
+import api from "./api";
+import TokenService from "./token.service";
+
+class AuthService {
+    login(username, password) {
+        return api
+            .post("/token/", {
+                username,
+                password
+            })
+            .then(response => {
+                if (response.data.access) {
+                    TokenService.setUser(response.data);
+                }
+
+                return response.data;
+            });
+    }
+
+    logout() {
+        TokenService.removeUser();
+    }
+
+    getCurrentUser() {
+        return TokenService.getUser();
+        //return JSON.parse(localStorage.getItem("user"));
+    }
+}
+
+
+export default new AuthService();
