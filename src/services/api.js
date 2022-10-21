@@ -36,9 +36,8 @@ instance.interceptors.response.use(
 
                 try {
                     const rs = await instance.post("/token/refresh/", {
-                        refreshToken: TokenService.getLocalRefreshToken(),
+                        refresh: TokenService.getLocalRefreshToken(),
                     });
-                    console.log(rs.data)
 
                     const { access } = rs.data;
                     TokenService.updateLocalAccessToken(access);

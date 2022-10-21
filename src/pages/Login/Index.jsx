@@ -43,20 +43,20 @@ function Login() {
         <Box component="main" position="static">
             <StyledContainer position="static">
                 <StyledBox component="form" onSubmit={handleSubmit}>
-                    <Paper>
+                    <Paper sx={{p:2}}>
                         <Grid
                             container
                             direction={'column'}
                             justify={'center'}
                             alignItems={'center'}>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sx={{mb:2}}>
                                 <FormControl>
                                     <InputLabel htmlFor="username-input">Username</InputLabel>
                                     <Input type="text" value={username} onChange={(e) => setUsername(e.target.value)} id="username-input" name="username" aria-describedby="username-helper-text"/>
                                     <FormHelperText id="username-helper-text"></FormHelperText>
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sx={{mb:2}}>
                                 <FormControl>
                                     <InputLabel htmlFor="password-input">Password</InputLabel>
                                     <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)}  id="password-input" name="password" aria-describedby="password-helper-text"/>

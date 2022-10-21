@@ -1,72 +1,56 @@
-import React, {useEffect, useState} from 'react'
+import React from 'react'
 import { useNavigate } from 'react-router-dom';
-import {Box, Card, CardActionArea, CardContent, CardMedia, Link, Typography} from "@mui/material";
-import api from "../../services/api";
+import {Box, Card, CardActionArea, CardContent, Link, Typography} from "@mui/material";
 import {styled} from "@mui/material/styles";
 import {theme} from "../../utils/style/theme";
 
 const StyledCard = styled(Card)(() => ({
     color: theme.palette.dark.main,
     '&:hover': {
-        color: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.light.main,
     },
+    '&.active': {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.light.main,
+    },
+    display: 'flex',
+    borderRadius: 20,
+    margin: 5,
+    padding: 5,
+
 }))
 
-function GameItem({id, start_time, scenario}) {
+const StyledTypography = styled(Typography)(() => ({
+    marginBottom: '15px'
+}))
+
+function GameItem({id, in_progress, is_complete, game_start_time, scenario_id, scenario_title}) {
     const navigate = useNavigate()
 
-    const handleCardClick = (id) => {
-        navigate('/room/' + id, {replace: true})
+    const handleCardClick = () => {
+         if(!is_complete) {
+             navigate('/room/' + id + '/' + scenario_id, {replace: true})
+         }
     }
 
-    const [script, setScenario] = useState('');
-
-    const headers = 'Bearer '.concat(localStorage.getItem('access_token'));
-
-    useEffect(() => {
-        // 👇️ set isMounted to true
-        let isMounted = true;
-
-        async function fetchData() {
-            await api.get(scenario,
-            ).then(
-                result => {
-                    setScenario(result.data)
-                }
-            ).catch (error => {
-                throw error;
-            })
-        }
-        fetchData();
-
-        return () => {
-            // 👇️ when component unmounts, set isMounted to false
-            isMounted = false;
-        };
-
-    }, [])
-
-    const dt = new Date(start_time)
+    const dt = new Date(game_start_time)
     const start_formatted = dt.getHours() + ':' + String(dt.getMinutes()).padStart(2, '0')
 
     return(
         <Box>
-            <StyledCard>
+            <StyledCard sx={{ backgroundColor: is_complete ? 'info.main' : 'light.main'}}>
                 <CardActionArea
                     component={Link}
-                    onClick={() => handleCardClick(id)}
-                    sx={{
-                        display: 'flex',
-                        backgroundColor: theme.palette.secondary.main,
-                    }}
+                    onClick={() => handleCardClick()}
                 >
                     <CardContent>
-                        <Typography>
-                            {script.title}
-                        </Typography>
-                        <Typography>
+                        <StyledTypography component="h2" variant="h5">
+                            {scenario_title}
+                        </StyledTypography>
+                        <StyledTypography component="h3" variant="h4">
                             {start_formatted}
-                        </Typography>
+                        </StyledTypography>
                     </CardContent>
                 </CardActionArea>
             </StyledCard>

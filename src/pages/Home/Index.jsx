@@ -19,6 +19,7 @@ const StyledBox = styled(Box)(() => ({
     alignItems: 'center',
     textAlign: 'center',
     height: '100%',
+    flexDirection: 'column',
 }))
 
 function Home() {
@@ -29,13 +30,13 @@ function Home() {
         let isMounted = true;
 
         async function fetchData() {
-            await api.get('/games/',
+            await api.get('/bookings/',
             ).then(
                 result => {
                     setGames(result.data)
                 }
             ).catch (error => {
-                throw error;
+                throw error.data;
             })
         }
 
@@ -49,23 +50,28 @@ function Home() {
         }, [])
 
     return(
-        <StyledBox component="main" position="static">
+        <Box component="main" position="static">
             <StyledContainer position="static">
-                {Array.isArray(games)
-                    ? games.map(element => {
-                        return (
-                            <Box key={element.id} sx={{ flex: 1, my: 1 }}>
-                                <GameItem
-                                    id={element.id}
-                                    start_time={element.start_time}
-                                    scenario={element.scenario}
-                                />
-                            </Box>
+                <StyledBox position="static">
+                    {Array.isArray(games)
+                        ? games.map(element => {
+                            return (
+                                <Box key={element.id} sx={{ flex: 1, my: 1 }}>
+                                    <GameItem
+                                        id={element.id}
+                                        in_progress={element.in_progress}
+                                        is_complete={element.is_complete}
+                                        game_start_time={element.game_start_time}
+                                        scenario_id={element.scenario_id}
+                                        scenario_title={element.scenario_title}
+                                    />
+                                </Box>
                             )
-                    })
-                    : null}
+                        })
+                        : null}
+                </StyledBox>
             </StyledContainer>
-        </StyledBox>
+        </Box>
     )
 }
 
