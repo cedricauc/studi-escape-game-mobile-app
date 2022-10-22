@@ -12,7 +12,6 @@ class AuthService {
                 if (response.data.access) {
                     TokenService.setUser(response.data);
                 }
-
                 return response.data;
             });
     }
@@ -25,6 +24,5 @@ class AuthService {
         return TokenService.getUser();
     }
 }
-
 
 export default new AuthService();

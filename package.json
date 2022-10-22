@@ -46,6 +46,7 @@
     ]
   },
   "devDependencies": {
-    "@types/react": "^18.0.21"
+    "@types/react": "^18.0.21",
+    "gh-pages": "^4.0.0"
   }
 }

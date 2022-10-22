@@ -7,15 +7,12 @@ import {
     Drawer,
     IconButton,
     Link,
-    ListItemButton,
-    ListItemText,
     Toolbar
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import TokenService from "../../services/token.service";
 import {useNavigate} from "react-router-dom";
-
 
 function Header() {
     const navigate = useNavigate()
@@ -73,7 +70,6 @@ function Header() {
                             <CloseIcon sx={{color: 'dark.main'}}/>
                         </IconButton>
                         <Divider sx={{mb: 2, borderColor: 'dark.main'}}/>
-
                         <Box sx={{mb: 2}}>
                             <Button
                                 component={Link}
