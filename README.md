@@ -1,70 +1,52 @@
-# Getting Started with Create React App
+# Escape Game
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Ce projet est un outil de lancement des parties d'escape game.
 
-## Available Scripts
+//lien déploiement
 
-In the project directory, you can run:
+Il est constitué de 3 parties à savoir :
+- une application web : reservations des séances
+- une application mobile : lancement des parties
+- une application desktop : surveillances des parties
 
-### `npm start`
+Le projet mobile Escape Game est une application React Native. \
+Le projet affiche les séances dans une liste. Le “maître du jeu” est en charge du démarrage d'une séance. L'application chronomètre le temps de jeu et affiche pour chaque salle un indice pour résoudre les énigmes.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Pré-requis
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Pour l'application mobile :
+- [Node.js](https://nodejs.org/en/download/) : back-end
+- [ReactNative](https://reactnative.dev/docs/environment-setup) : front
+- [PostGreSQL 15](https://www.postgresql.org/download/) : SGBD
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Installation
 
-### `npm run build`
+- A la racine du projet, lancez les commandes
+```sh
+npm install
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Utilisation
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Commandes pour lancer le serveur Node.js
+```sh
+npm start
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Lancement de l'application en local.\
+Ouvrir [http://localhost:3000](http://localhost:3000) pour afficher dans le navigateur.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+**Identification interface:**\
+utilisateur: admin\
+mot de passe: admin
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Visuel de l'application
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+**Liste des séances**
+![Liste des séances](./img/booking.png)
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+**Partie en cours**
+![Partie en cours](./img/room.png)
