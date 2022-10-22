@@ -4,11 +4,13 @@ import Home from './pages/Home/Index.jsx'
 import Login from './pages/Login/Index.jsx'
 import Room from './pages/Room/Index.jsx'
 import {PrivateRoute} from "./components/PrivateRoute";
+import Header from "./components/Header/Header";
 
 const App = () => {
   const Layout = () => {
     return (
       <>
+        <Header />
         <Outlet />
       </>
     )

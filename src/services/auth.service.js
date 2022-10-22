@@ -23,7 +23,6 @@ class AuthService {
 
     getCurrentUser() {
         return TokenService.getUser();
-        //return JSON.parse(localStorage.getItem("user"));
     }
 }
 

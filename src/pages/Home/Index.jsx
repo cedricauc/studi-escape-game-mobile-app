@@ -10,8 +10,7 @@ const StyledContainer = styled(Container)(() => ({
     alignItems: 'center',
     alignContent: 'center',
     flexDirection: 'column',
-    height: '100vh',
-    backgroundColor: theme.palette.primary.main
+    height: '100%',
 }))
 
 const StyledBox = styled(Box)(() => ({
@@ -26,7 +25,6 @@ function Home() {
     const [games, setGames] = useState('');
 
     useEffect(() => {
-        // 👇️ set isMounted to true
         let isMounted = true;
 
         async function fetchData() {
@@ -43,7 +41,6 @@ function Home() {
         fetchData();
 
         return () => {
-            // 👇️ when component unmounts, set isMounted to false
             isMounted = false;
         };
 

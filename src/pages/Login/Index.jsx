@@ -10,8 +10,7 @@ const StyledContainer = styled(Container)(() => ({
     alignItems: 'center',
     alignContent: 'center',
     flexDirection: 'column',
-    height: '100vh',
-    backgroundColor: theme.palette.primary.main
+    height: '100%',
 }))
 
 const StyledBox = styled(Box)(() => ({

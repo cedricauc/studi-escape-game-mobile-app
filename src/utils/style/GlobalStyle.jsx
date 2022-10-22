@@ -14,6 +14,12 @@ const StyledGlobalStyle = createGlobalStyle`
     * {
       box-sizing: inherit;
     }
+    
+     #root {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr;
+     }
 `
 
 function GlobalStyle() {

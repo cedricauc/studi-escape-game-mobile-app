@@ -7,21 +7,18 @@ import {
     Stack,
     Pagination,
     List,
-    Link, Button,
+    Link, Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions,
 } from '@mui/material'
 import {styled} from "@mui/material/styles";
-import {theme} from "../../utils/style/theme";
 import usePagination from "./pagination";
 import Clue from "./Clue";
-
 
 const StyledContainer = styled(Container)(() => ({
     display: 'flex',
     alignItems: 'center',
     alignContent: 'center',
     flexDirection: 'column',
-    height: '100vh',
-    backgroundColor: theme.palette.primary.main
+    height: '100%',
 }))
 
 const StyledBox = styled(Box)(() => ({
@@ -38,24 +35,26 @@ const StyledPagination = styled(Pagination)(() => ({
 
 function Room() {
     const navigate = useNavigate();
-
     const location = useLocation()
 
     const booking_id = location.pathname.split('/')[2]
-
     const scenario_id = location.pathname.split('/')[3]
 
+    const [isActive, setIsActive] = useState(false);
+    const [isPaused, setIsPaused] = useState(true);
+    const [time, setTime] = useState(0);
+    const [open, setOpen] = React.useState(false);
+    const [agree, setAgree] = React.useState(false);
+
     const [isClicked, setIsClicked] = useState(false);
-
     const [clues, setClues] = useState('');
-
     const [booking, setBooking] = useState('')
-
     let [page, setPage] = useState(1)
     const PER_PAGE = 1
 
-    const data = usePagination(clues, PER_PAGE)
+    let room
 
+    const data = usePagination(clues, PER_PAGE)
     const count = useRef(0)
 
     count.current = Math.ceil(clues.length / PER_PAGE)
@@ -67,74 +66,91 @@ function Room() {
     }
 
     useEffect(() => {
-        // 👇️ set isMounted to true
-        let isMounted = true;
-
+        let interval = null;
         setIsClicked(false)
-
-        async function fetchBookingData() {
-            await api.get('/bookings/' +  booking_id + '/',
-            ).then(
-                result => {
-                    setBooking(result.data)
-                    console.log(result.data)
-                }
-            ).catch (error => {
-                throw error;
-            })
-        }
-
-        async function fetchClueData() {
-            await api.get('/clues/',
-            ).then(
-                result => {
-                    let rows = result.data.filter(
-                        (obj) =>
-                            obj.scenario_id === scenario_id
-                    )
-
-                    // changement des données de la liste
-                    count.current = Math.ceil(rows.length / PER_PAGE)
-                    setClues(rows)
-                    data.setData(rows)
-                }
-            ).catch (error => {
-                throw error;
-            })
-        }
 
         fetchBookingData();
         fetchClueData();
 
+        if (isActive && isPaused === false) {
+            interval = setInterval(() => {
+                setTime((time) => time + 1);
+            }, 1000);
+        } else {
+            clearInterval(interval);
+        }
+
         return () => {
-            // 👇️ when component unmounts, set isMounted to false
-            isMounted = false;
+            clearInterval(interval);
         };
 
-    }, [isClicked])
+    }, [isClicked, isActive])
+
+
+    useEffect(() => {
+        // partie a dépassé son temps imparti,
+        if(booking !== undefined && time > (parseFloat(booking.scenario_duration) * 3600))
+        {
+            // 1 x notification push
+            if(agree === false){
+                setOpen(true);
+            }
+        }
+
+    }, [time])
+
+    const fetchBookingData = async () => {
+        await api.get('/bookings/' + booking_id + '/',
+        ).then(
+            result => {
+                setBooking(result.data)
+            }
+        ).catch(error => {
+            throw error;
+        })
+    }
+
+    const fetchClueData = async () => {
+        await api.get('/clues/',
+        ).then(
+            result => {
+                let rows = result.data.filter(
+                    (obj) =>
+                        obj.scenario_id === scenario_id
+                )
+                // changement des données de la liste
+                count.current = Math.ceil(rows.length / PER_PAGE)
+                setClues(rows)
+                data.setData(rows)
+            }
+        ).catch(error => {
+            throw error;
+        })
+    }
 
     const startGame = async () => {
         setIsClicked(true)
 
         const dt = new Date()
-
         const formData = {
             in_progress: true,
             start_hour: dt.getHours().toLocaleString(),
             start_minutes: dt.getMinutes().toLocaleString()
         };
 
-        api.post('/bookings/' +  booking_id + '/', formData).then(response => {
-        }).catch (error => {
-                throw error;
+        api.post('/bookings/' + booking_id + '/', formData
+        ).then(response => {}
+        ).catch(error => {
+            throw error;
         })
+        setIsActive(true);
+        setIsPaused(false);
     }
 
     const endGame = async () => {
         setIsClicked(true)
 
         const dt = new Date()
-
         const formData = {
             in_progress: false,
             is_complete: true,
@@ -142,20 +158,28 @@ function Room() {
             end_minutes: dt.getMinutes().toLocaleString()
         };
 
-        api.post('/bookings/' +  booking_id + '/', formData).then(response => {
+        api.post('/bookings/' + booking_id + '/', formData
+        ).then(response => {
             navigate('/', {replace: true});
-        }).catch (error => {
+        }).catch(error => {
             throw error;
         })
+        setIsActive(false);
+        setIsPaused(true);
+        setTime(0);
     }
 
-    return(
+    const handleClose = () => {
+        setOpen(false);
+        setAgree(true);
+    };
+
+    return (
         <Box component="main" position="static">
             <StyledContainer position="static">
-
                 <StyledBox>
-                    <Stack  direction="column"  justifyContent="space-between">
-                        <Box sx={{my:5}}>
+                    <Stack direction="column" justifyContent="space-between">
+                        <Box sx={{my: 5}}>
                             {!booking.in_progress && !booking.is_complete &&
                                 <Button
                                     onClick={() => startGame()}
@@ -164,7 +188,7 @@ function Room() {
                                     variant="contained"
                                     aria-haspopup="false"
                                     sx={{
-                                        p:2,
+                                        p: 2,
                                         borderRadius: 29,
                                         backgroundColor: 'light.main',
                                         color: 'primary.main',
@@ -189,7 +213,7 @@ function Room() {
                                     variant="contained"
                                     aria-haspopup="false"
                                     sx={{
-                                        p:2,
+                                        p: 2,
                                         borderRadius: 29,
                                         backgroundColor: 'light.main',
                                         color: 'primary.main',
@@ -207,11 +231,12 @@ function Room() {
                                 </Button>
                             }
                         </Box>
-                        <Box sx={{my:5}}>
+                        <Box sx={{my: 5}}>
                             {booking.in_progress &&
                                 <List p="10" pt="3" spacing={2}>
                                     {Array.isArray(data.currentData())
                                         ? data.currentData().map((v) => {
+                                            room = v.room_num
                                             return (
                                                 <Box key={v}>
                                                     <Clue room_num={v.room_num} clue={v.clue}></Clue>
@@ -222,7 +247,7 @@ function Room() {
                                 </List>
                             }
                         </Box>
-                        <Box sx={{my:5}}>
+                        <Box sx={{my: 5}}>
                             {booking.in_progress &&
                                 <StyledPagination
                                     count={count.current}
@@ -237,6 +262,24 @@ function Room() {
                     </Stack>
                 </StyledBox>
             </StyledContainer>
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="alert-dialog-title"
+                aria-describedby="alert-dialog-description"
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {"Notification salle n°" + room}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        La partie a dépassé son temps imparti.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose}>Ok</Button>
+                </DialogActions>
+            </Dialog>
         </Box>
     )
 }
