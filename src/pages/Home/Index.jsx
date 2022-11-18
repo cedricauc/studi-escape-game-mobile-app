@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react'
 import {styled} from "@mui/material/styles";
-import {Box, Container} from "@mui/material";
-import {theme} from "../../utils/style/theme";
+import {Box, Card, CardContent, Container} from "@mui/material";
 import GameItem from "./GameItem";
 import api from "../../services/api";
+import { Typography } from '@mui/material';
 
 const StyledContainer = styled(Container)(() => ({
     display: 'flex',
@@ -19,6 +19,7 @@ const StyledBox = styled(Box)(() => ({
     textAlign: 'center',
     height: '100%',
     flexDirection: 'column',
+    justifyContent: 'center'
 }))
 
 function Home() {
@@ -50,7 +51,7 @@ function Home() {
         <Box component="main" position="static">
             <StyledContainer position="static">
                 <StyledBox position="static">
-                    {Array.isArray(games)
+                    {Array.isArray(games) && games.length > 0
                         ? games.map(element => {
                             return (
                                 <Box key={element.id} sx={{ flex: 1, my: 1 }}>
@@ -65,7 +66,16 @@ function Home() {
                                 </Box>
                             )
                         })
-                        : null}
+                        :
+                            <Card sx={{ minWidth: 275 }}>
+                                <CardContent>
+                                    <Typography sx={{ fontSize: 14, mt:2 }} color="text.secondary" gutterBottom>
+                                        Aucune réservations
+                                    </Typography>
+                                </CardContent>
+                            </Card>
+
+                    }
                 </StyledBox>
             </StyledContainer>
         </Box>

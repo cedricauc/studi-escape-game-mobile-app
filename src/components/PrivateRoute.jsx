@@ -6,6 +6,7 @@ export { PrivateRoute };
 
 const PrivateRoute = () => {
     const auth = AuthService.getCurrentUser()
+    console.log(auth)
     return auth ? <Outlet /> : <Navigate to="/login" />;
 }
 

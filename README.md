@@ -1,13 +1,13 @@
 # Escape Game
 
-Ce projet est un outil de lancement des parties d'escape game.
-
-https://cedricauc.github.io/escapegame
-
 Il est constitué de 3 parties à savoir :
 - une application web : reservations des séances
 - une application mobile : lancement des parties
 - une application desktop : surveillances des parties
+
+Ce projet est un outil de lancement des parties d'escape game.
+
+https://cedricauc.github.io/escapegame
 
 Le projet mobile Escape Game est une application React Native. \
 Le projet affiche les séances dans une liste. Le “maître du jeu” est en charge du démarrage d'une séance. L'application chronomètre le temps de jeu et affiche pour chaque salle un indice pour résoudre les énigmes.

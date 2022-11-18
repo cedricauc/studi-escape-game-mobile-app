@@ -13,8 +13,11 @@ import MenuIcon from '@mui/icons-material/Menu'
 import CloseIcon from '@mui/icons-material/Close'
 import TokenService from "../../services/token.service";
 import {useNavigate} from "react-router-dom";
+import AuthService from "../../services/auth.service";
 
 function Header() {
+    const auth = AuthService.getCurrentUser()
+
     const navigate = useNavigate()
     //react useState hook pour l'état ouverture/fermeture
     const [open, setState] = React.useState(null)
@@ -30,6 +33,10 @@ function Header() {
     const handleClick = () => {
         TokenService.removeUser();
         navigate('/login')
+    }
+
+    const handleHomeClick = () => {
+        navigate('/')
     }
 
     return (
@@ -95,6 +102,33 @@ function Header() {
                                 Se déconnecter
                             </Button>
                         </Box>
+                        { auth ?
+                        <Box>
+                            <Button
+                                component={Link}
+                                onClick={() => handleHomeClick()}
+                                id="home-button"
+                                variant="contained"
+                                sx={{
+                                    m: 0,
+                                    p: 1,
+                                    width: 1,
+                                    backgroundColor: 'primary.main',
+                                    color: 'light.main',
+                                    '&:hover': {
+                                        backgroundColor: 'secondary.main',
+                                        color: 'light.main',
+                                    },
+                                    '&.active': {
+                                        backgroundColor: 'secondary.main',
+                                        color: 'light.main',
+                                    },
+                                }}
+                            >
+                                Séances
+                            </Button>
+                        </Box>
+                        : null }
                     </Box>
                 </Drawer>
             </Toolbar>
