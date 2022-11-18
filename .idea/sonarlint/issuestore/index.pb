@@ -19,8 +19,6 @@ K
 src/pages/Home/GameItem.jsx,2\6\26d4778c27a1741bd2beb7fa85c6ae81f49b49b9
 H
 src/pages/Room/Index.jsx,f\b\fb3ad9544c4fdebfa45bfaaf1bde179939a8779b
-<
-package.json,7\0\7030d0b2f71b999ff89a343de08c414af32fc93a
 I
 src/pages/Login/Index.jsx,7\b\7b82f96377b345dc3d1733ec3ee4ecc7b0d35ca4
 O
