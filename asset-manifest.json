@@ -1,12 +1,12 @@
 {
   "files": {
-    "main.js": "/static/js/main.f0fe2aeb.js",
-    "static/js/787.5cccf6c2.chunk.js": "/static/js/787.5cccf6c2.chunk.js",
-    "index.html": "/index.html",
-    "main.f0fe2aeb.js.map": "/static/js/main.f0fe2aeb.js.map",
-    "787.5cccf6c2.chunk.js.map": "/static/js/787.5cccf6c2.chunk.js.map"
+    "main.js": "/studi-escape-game/static/js/main.75783944.js",
+    "static/js/787.5cccf6c2.chunk.js": "/studi-escape-game/static/js/787.5cccf6c2.chunk.js",
+    "index.html": "/studi-escape-game/index.html",
+    "main.75783944.js.map": "/studi-escape-game/static/js/main.75783944.js.map",
+    "787.5cccf6c2.chunk.js.map": "/studi-escape-game/static/js/787.5cccf6c2.chunk.js.map"
   },
   "entrypoints": [
-    "static/js/main.f0fe2aeb.js"
+    "static/js/main.75783944.js"
   ]
 }
